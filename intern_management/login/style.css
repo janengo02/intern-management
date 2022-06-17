@@ -1,0 +1,75 @@
+<style>
+body  
+{  
+    margin: 0;  
+    padding: 0;  
+    background-image:url(../img/13.jpg);
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+    font-family: 'Arial';  
+}  
+.login{  
+        width: 310px;  
+        overflow: hidden;  
+        margin: auto;  
+        position: absolute;
+        left: 30px;
+        padding: 60px; 
+        padding-top: 200px;
+        line-height: 30px;
+          
+}  
+.pageTitle{
+    font-family:'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    color: #df0082;
+    font-size:36px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+      width:200px;
+      padding-right:950px;
+      padding-top:100px;
+}
+
+label{  
+    color: #5b5b5b;  
+    font-family:'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    font-size: 17px;  
+}  
+#email{  
+    width: 300px;  
+    height: 40px;  
+    border: solid;
+    border-color: #9c9c9c;  
+    border-width: 0.5px;
+    border-radius: 10px;  
+    padding-left: 8px;  
+}  
+#password{  
+    width: 300px;  
+    height: 40px;  
+    border: solid;
+    border-color: #9c9c9c;  
+    border-width: 0.5px;
+    border-radius: 10px;   
+    padding-left: 8px;  
+      
+}  
+#loginbtn{  
+    position: absolute;
+    left: 105px;
+    top: 420px;
+    width: 200px;  
+    height: 40px;  
+    border: none;  
+    border-radius: 20px;  
+    background-color: #f8f8f8; 
+    color: rgb(43, 43, 43);  
+} 
+#loginbtn:hover {
+    background-color: #df0082;
+    color: #f8f8f8;
+} 
+</style>
