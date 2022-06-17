@@ -615,7 +615,7 @@ if (isset($_GET['status_id']) && isset($_GET['task_id']) && isset($_GET['pg_id']
     <script type="text/javascript">
     function status_update(value, task_id, pg_id) {
         //alert(task_id);
-        let url = "http://localhost/intern_management/admin/index.php";
+        let url = "http://localhost/intern-management/admin/index.php";
         window.location.href = url + "?task_id=" + task_id + "&status_id=" + value + "&pg_id=" + pg_id;
     }
     </script>
