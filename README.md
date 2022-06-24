@@ -19,10 +19,10 @@ and Many More..
 
 ## Screenshots
 ![login](img/screenshots/Login.png) 
---- *Login Page*
-![filter-and-sort](img/screenshots/Filter & Sorting.png) 
---- *Filtering and Sorting functions*
+*Login Page*
+![filter-and-sort](img/screenshots/Filter & Sorting.png)
+*Filtering and Sorting functions*
 ![crud](img/screenshots/CRUD.png) 
---- *Add-Edit-Read-Delete using Bootsrap Modals*
+*Add-Edit-Read-Delete using Bootsrap Modals*
 ![settings](img/screenshots/Settings.png) 
---- *Admin Settings Page*
+*Admin Settings Page*
