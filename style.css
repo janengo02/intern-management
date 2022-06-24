@@ -448,5 +448,18 @@ table td:nth-child(4){
 .progress-blue span {
     background-color: #99f2fd;
 }
+/* ==============warning buttons============= */
+.warningbtn {
+  background-color: #c74f4f00;
+  color:rgba(216, 63, 63, 0.527);
+  border-radius: 20%;
+  border: none;
+  margin-left:5px;
+}
+.warningbtn:hover {
+  background-color: #c74f4f00;
+  color:rgb(216, 63, 63);
+  border: none;
+}
 
 </style>

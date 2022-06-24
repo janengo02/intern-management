@@ -397,13 +397,38 @@ if (isset($_GET['status_id']) && isset($_GET['task_id']) && isset($_GET['pg_id']
                             <?php echo $rows['pg_end_date'] ?></button>
                         <?php
                                 include 'modals/edit_program_modal.php';
+                                if ($rows['pg_end_date'] < $rows['pg_start_date']) {
+                                ?>
+                        <button type="button" class="warningbtn" data-bs-toggle="tooltip" data-bs-placement="right"
+                            title="End Date must be after Start Date!">
+                            <i class='bx bxs-error-circle bx-xs'></i>
+                        </button>
+                        <?php
+                                }
                             } else {
-                            ?>
+                                ?>
                         <button class="databtn" type="button" data-bs-toggle="modal"
                             data-bs-target="#taskeditModal<?php echo $rows['task_id'] ?>">
                             <?php echo $rows['task_end_date'] ?></button>
                         <?php
                                 include 'modals/edit_task_modal.php';
+                                if (($rows['task_end_date'] < $rows['task_start_date']) || ($rows['task_start_date'] < $rows['pg_start_date']) || ($rows['task_end_date'] > $rows['pg_end_date'])) {
+                                ?>
+                        <button type="button" class="warningbtn" data-bs-toggle="tooltip" data-bs-placement="right"
+                            title="
+                                    <?php
+                                    if ($rows['task_end_date'] < $rows['task_start_date']) {
+                                        echo "End Date must be after Start Date!";
+                                    }
+                                    if (($rows['task_start_date'] < $rows['pg_start_date']) || ($rows['task_end_date'] > $rows['pg_end_date'])) {
+                                        echo "Task's dates must be within the program's period!";
+                                    }
+                                    ?>
+                                ">
+                            <i class='bx bxs-error-circle bx-xs'></i>
+                        </button>
+                        <?php
+                                }
                             }
                             ?>
                     </td>
@@ -412,9 +437,10 @@ if (isset($_GET['status_id']) && isset($_GET['task_id']) && isset($_GET['pg_id']
                         <?php
                             if ($rows['pg_id'] != $prev_pg) {
                             ?>
-                        <div class="animated-progress progress-blue">
-                            <span
-                                style="width:<?php echo $rows['pg_status'] . '%' ?>"><?php echo (round($rows['pg_status'], 1)) . '%' ?></span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                                style="width:<?php echo $rows['pg_status'] . '%' ?>">
+                                <?php echo (round($rows['pg_status'], 1)) . '%' ?></div>
                         </div>
                         <?php
                                 $prev_pg = $rows['pg_id'];
@@ -477,6 +503,24 @@ if (isset($_GET['status_id']) && isset($_GET['task_id']) && isset($_GET['pg_id']
                             <?php echo $rows['task_end_date'] ?></button>
                         <?php
                                         include 'modals/edit_task_modal.php';
+
+                                        if (($rows['task_end_date'] < $rows['task_start_date']) || ($rows['task_start_date'] < $rows['pg_start_date']) || ($rows['task_end_date'] > $rows['pg_end_date'])) {
+                                ?>
+                        <button type="button" class="warningbtn" data-bs-toggle="tooltip" data-bs-placement="right"
+                            title="
+                                <?php
+                                            if ($rows['task_end_date'] < $rows['task_start_date']) {
+                                                echo "End Date must be after Start Date!";
+                                            }
+                                            if (($rows['task_start_date'] < $rows['pg_start_date']) || ($rows['task_end_date'] > $rows['pg_end_date'])) {
+                                                echo "Task's dates must be within the program's period!";
+                                            }
+                                ?>
+                            ">
+                            <i class='bx bxs-error-circle bx-xs'></i>
+                        </button>
+                        <?php
+                                        }
                                     }
                             ?>
                     </td>
