@@ -26,7 +26,7 @@ if (isset($_POST['internid'])) {
             unlink("../../" . $previous);
         }
         echo "<script>alert('User account updated!')</script>";
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo "<script>alert('Data not saved')</script>";
     }

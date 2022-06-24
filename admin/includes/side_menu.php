@@ -35,7 +35,7 @@ include '../includes/variances.php';
             </div>
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">Filter</a></li>
-                <form action="" method="GET">
+                <form action="db/filter_db.php" method="POST">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="subformText">Interns</label>

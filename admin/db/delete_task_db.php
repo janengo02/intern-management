@@ -19,7 +19,7 @@ if (isset($_POST['taskid'])) {
 
 
     if ($run) {
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo "Error: " . mysqli_error($conn);
     }

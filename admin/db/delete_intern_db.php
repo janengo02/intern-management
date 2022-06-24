@@ -19,7 +19,7 @@ if (isset($_POST['internid'])) {
      $run2 = mysqli_query($conn, $query2);
 
      if (($run) && ($run2) && ($run3)) {
-          header("Location:" . $_SERVER['HTTP_REFERER']);
+          header('location:../index.php');
      } else {
           echo "Error: " . mysqli_error($conn);
      }

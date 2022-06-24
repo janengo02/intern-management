@@ -49,16 +49,11 @@
                     </div>
                     <div class="mb-3">
                         <label>Start date</label>
-                        <input type="date" id="pgstartdate" name="pgstartdate" class="form-control"
-                            onInput="validDates()" required>
+                        <input type="date" name="pgstartdate" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label>End date</label>
-                        <input type="date" id="pgenddate" name="pgenddate" class="form-control" onInput="validDates()"
-                            required>
-                    </div>
-                    <div class="alert alert-danger" role="alert" id="datealert_addintern" style="display:none;">
-                        Start date must be before end date!
+                        <input type="date" name="pgenddate" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -69,21 +64,3 @@
         </div>
     </div>
 </div>
-<script>
-function validDates() {
-    var inputStartDate = document.getElementById("pgstartdate").value;
-    var inputEndDate = document.getElementById("pgenddate").value;
-    console.log(inputStartDate);
-    console.log(inputEndDate);
-    var showDateAlert = document.getElementById("datealert_addintern");
-    if ((inputStartDate != "") && (inputEndDate != "")) {
-        if (inputStartDate > inputEndDate) {
-            showDateAlert.style.display = 'block';
-            document.getElementById("addintern").disabled = true;
-        } else {
-            showDateAlert.style.display = 'none';
-            document.getElementById("addintern").disabled = false;
-        }
-    }
-}
-</script>

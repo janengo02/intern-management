@@ -33,7 +33,7 @@ if (isset($_POST['editProfile'])) {
         $_SESSION['name'] = $profile_name;
         $_SESSION['password'] = $password;
         echo "<script>alert('User account updated!')</script>";
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo "<script>alert('Data not saved')</script>";
     }

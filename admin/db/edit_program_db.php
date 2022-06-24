@@ -12,7 +12,7 @@ if (isset($_POST['pgid'])) {
 
     if ($query_run2) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }

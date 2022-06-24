@@ -14,24 +14,35 @@ $stat_id = [];
 $stat = [];
 $stat_check = [];
 $stat_count = 0;
+$search_stats = "";
 while ($row_stat = mysqli_fetch_array($sql_stat)) {
     $stat[$stat_count] = $row_stat['status'];
     $stat_id[$stat_count] = $row_stat['status_id'];
     $stat_check[$stat_count] = $row_stat['filter_status'];
+    if ($row_stat['filter_status'] == "checked") {
+        $search_stats .= $row_stat['status_id'] . ",";
+    }
     $stat_count++;
 }
+$search_stats = substr_replace($search_stats, "", -1);
 // PG TYPE LIST
 $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_id");
 $pgtype_id = [];
 $pgtype = [];
 $pgtype_check = [];
 $pgtype_count = 0;
+$search_programs = "";
 while ($row_pgtype = mysqli_fetch_array($sql_pgtype)) {
     $pgtype[$pgtype_count] = $row_pgtype['pg_type'];
     $pgtype_id[$pgtype_count] = $row_pgtype['pg_type_id'];
     $pgtype_check[$pgtype_count] = $row_pgtype['filter_pg'];
+    if ($row_pgtype['filter_pg'] == "checked") {
+        $search_programs .= $row_pgtype['pg_type_id'] . ",";
+    }
     $pgtype_count++;
 }
+$search_programs = substr_replace($search_programs, "", -1);
+
 //FILTER CONDITIONS
 $sql_filter = mysqli_query($conn, "SELECT * FROM filter_conds");
 while ($row_filter = mysqli_fetch_array($sql_filter)) {

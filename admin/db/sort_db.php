@@ -15,7 +15,7 @@ if (isset($_POST['internASC'])) {
     }
     if ($query_run) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }
@@ -35,7 +35,7 @@ if (isset($_POST['internDESC'])) {
     }
     if ($query_run) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }
@@ -54,7 +54,7 @@ if (isset($_POST['programASC'])) {
     }
     if ($query_run) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }
@@ -74,7 +74,7 @@ if (isset($_POST['programDESC'])) {
     }
     if ($query_run) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }
@@ -93,7 +93,7 @@ if (isset($_POST['startdateASC'])) {
     }
     if ($query_run) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }
@@ -113,7 +113,7 @@ if (isset($_POST['startdateDESC'])) {
     }
     if ($query_run) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }
@@ -132,7 +132,7 @@ if (isset($_POST['enddateASC'])) {
     }
     if ($query_run) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }
@@ -152,7 +152,7 @@ if (isset($_POST['enddateDESC'])) {
     }
     if ($query_run) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }
@@ -171,7 +171,7 @@ if (isset($_POST['statusASC'])) {
     }
     if ($query_run) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }
@@ -191,7 +191,7 @@ if (isset($_POST['statusDESC'])) {
     }
     if ($query_run) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }

@@ -19,7 +19,7 @@ if (isset($_POST['taskid'])) {
 
     if ($query_run) {
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }

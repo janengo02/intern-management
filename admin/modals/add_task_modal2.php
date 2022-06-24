@@ -54,40 +54,18 @@
 	                    </div>
 	                    <div class="mb-3">
 	                        <label>Start date</label>
-	                        <input type="date" id="taskstartdate2" name="taskstartdate" class="form-control"
-	                            onInput="validDates_addtask2()" required>
+	                        <input type="date" name="taskstartdate" class="form-control" required>
 	                    </div>
 	                    <div class="mb-3">
 	                        <label>End date</label>
-	                        <input type="date" name="taskenddate" id="taskenddate2" class="form-control"
-	                            onInput="validDates_addtask2()" required>
+	                        <input type="date" name="taskenddate" class="form-control" required>
 	                    </div>
-	                    <div class="alert alert-danger" role="alert" id="datealert_addtask2" style="display:none;">
-	                        Start date must be before end date!
-	                    </div>
-
 	                </div>
 	                <div class="modal-footer">
 	                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-	                    <button type="submit" name="addtask" id="submit_addtask2" class="btn btn-primary">Add</button>
+	                    <button type="submit" name="addtask" class="btn btn-primary">Add</button>
 	                </div>
 	            </form>
 	        </div>
 	    </div>
 	</div>
-	<script>
-function validDates_addtask2() {
-    var inputStartDate = document.getElementById("taskstartdate2").value;
-    var inputEndDate = document.getElementById("taskenddate2").value;
-    var showDateAlert = document.getElementById("datealert_addtask2");
-    if ((inputStartDate != "") && (inputEndDate != "")) {
-        if (inputStartDate > inputEndDate) {
-            showDateAlert.style.display = 'block';
-            document.getElementById("submit_addtask2").disabled = true;
-        } else {
-            showDateAlert.style.display = 'none';
-            document.getElementById("submit_addtask2").disabled = false;
-        }
-    }
-}
-	</script>

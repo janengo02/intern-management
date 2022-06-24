@@ -20,7 +20,7 @@ if (isset($_POST['addtask'])) {
         echo '<script> alert("Data Saved"); </script>';
         // header('Location: ../index.php');
         // header("location:javascript://history.go(-1)");
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }

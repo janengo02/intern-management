@@ -42,7 +42,7 @@ if (isset($_POST['addintern'])) {
     if (($query_run) && ($query_run2) && ($query_run3)) {
         move_uploaded_file($avatar_temp, "../../$path");
         echo '<script> alert("Data Saved"); </script>';
-        header("Location:" . $_SERVER['HTTP_REFERER']);
+        header('location:../index.php');
     } else {
         echo '<script> alert("Data Not Saved"); </script>';
     }

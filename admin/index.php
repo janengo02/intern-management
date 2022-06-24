@@ -10,23 +10,6 @@ if (!isset($_SESSION['email'])) {
 
 include '../includes/variances.php';
 
-// ----------default filter conditions-----------
-
-$search_programs = $pgtype_id;
-$search_stats = $stat_id;
-
-// ----------update filter conditions-----------
-
-
-if (isset($_GET['search_programs'])) {
-    $search_programs = $_GET['search_programs'];
-}
-$search_programs = implode(', ', $search_programs);
-
-if (isset($_GET['search_stats'])) {
-    $search_stats = $_GET['search_stats'];
-}
-$search_stats = implode(', ', $search_stats);
 // ------------------------
 if ($search_task != "") {
     $sql = mysqli_query($conn, "SELECT interns.intern_id,interns.name, interns.email, 
@@ -92,7 +75,7 @@ if (isset($_GET['status_id']) && isset($_GET['task_id']) && isset($_GET['pg_id']
     mysqli_query($conn, "UPDATE task_list SET status_id=$status_id 
         WHERE task_id=$task_id");
     updatePG($pg_id);
-    header("Location:" . $_SERVER['HTTP_REFERER']);
+    header('location:index.php');
     die();
 }
 ?>
