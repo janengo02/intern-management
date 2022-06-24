@@ -34,7 +34,7 @@ $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_i
     <!-- =================================== -->
     <section class="home-section">
         <div class="home-content">
-            <i class='bx bx-cog'></i>
+            <i class='bx bx-cog bx-md'></i>
             <a href="./settings.php" class="text">Settings</a>
         </div>
         <div class=mainContent>
@@ -42,7 +42,7 @@ $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_i
             <table>
                 <tr>
                     <th></th>
-                    <th>Task Status</th>
+                    <th>Edit Task Status List</th>
                 </tr>
                 <?php
                 $i = 0;
@@ -97,7 +97,7 @@ $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_i
             <table>
                 <tr>
                     <th></th>
-                    <th>Program Type</th>
+                    <th>Edit Program Type List</th>
                 </tr>
                 <?php
                 $i = 0;

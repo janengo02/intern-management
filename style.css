@@ -454,12 +454,32 @@ table td:nth-child(4){
   color:rgba(216, 63, 63, 0.527);
   border-radius: 20%;
   border: none;
+  outline: none;
   margin-left:5px;
 }
 .warningbtn:hover {
   background-color: #c74f4f00;
   color:rgb(216, 63, 63);
   border: none;
+  outline: none;
+}
+.warningbtn:active {
+  background-color: #c74f4f00;
+  color:rgb(216, 63, 63);
+  border: none;
+  outline: none;
+}
+.warningbtn:focus {
+  background-color: #c74f4f00;
+  color:rgb(216, 63, 63);
+  border: none;
+  outline: none;
+}
+.warningbtn:visited {
+  background-color: #c74f4f00;
+  color:rgb(216, 63, 63);
+  border: none;
+  outline: none;
 }
 
 </style>
