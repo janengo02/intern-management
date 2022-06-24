@@ -12,22 +12,36 @@ $role = array("Admin", "Intern");
 $sql_stat = mysqli_query($conn, "SELECT * FROM status_list ORDER BY status_list.status_id");
 $stat_id = [];
 $stat = [];
+$stat_check = [];
 $stat_count = 0;
 while ($row_stat = mysqli_fetch_array($sql_stat)) {
     $stat[$stat_count] = $row_stat['status'];
     $stat_id[$stat_count] = $row_stat['status_id'];
+    $stat_check[$stat_count] = $row_stat['filter_status'];
     $stat_count++;
 }
 // PG TYPE LIST
 $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_id");
 $pgtype_id = [];
 $pgtype = [];
+$pgtype_check = [];
 $pgtype_count = 0;
 while ($row_pgtype = mysqli_fetch_array($sql_pgtype)) {
     $pgtype[$pgtype_count] = $row_pgtype['pg_type'];
     $pgtype_id[$pgtype_count] = $row_pgtype['pg_type_id'];
+    $pgtype_check[$pgtype_count] = $row_pgtype['filter_pg'];
     $pgtype_count++;
 }
+//FILTER CONDITIONS
+$sql_filter = mysqli_query($conn, "SELECT * FROM filter_conds");
+while ($row_filter = mysqli_fetch_array($sql_filter)) {
+    $search_intern = $row_filter['filter_interns'];
+    $search_task = $row_filter['filter_tasks'];
+    $search_startdate = $row_filter['filter_start_date'];
+    $search_enddate = $row_filter['filter_end_date'];
+}
+
+
 //SORTING CONDITIONS
 $sql_sorting = mysqli_query($conn, "SELECT * FROM sort");
 $sorting = [];

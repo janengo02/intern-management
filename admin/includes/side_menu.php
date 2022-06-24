@@ -39,8 +39,8 @@ include '../includes/variances.php';
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="subformText">Interns</label>
-                            <input type="text" name="search_intern" class="form-control"
-                                placeholder="Search for intern">
+                            <input type="text" name="search_intern" value="<?php echo $search_intern ?>"
+                                class="form-control" placeholder="Search for intern">
                         </div>
                         <br>
                         <!-- Program typ chechbox -->
@@ -52,7 +52,8 @@ include '../includes/variances.php';
                             ?>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="search_programs[]"
-                                    value="<?php echo $pgtype_id[$i]; ?>" id="flexCheckDefault">
+                                    value="<?php echo $pgtype_id[$i]; ?>" id="flexCheckDefault"
+                                    <?php echo $pgtype_check[$i]; ?>>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     <?php echo $pgtype[$i]; ?>
                                 </label>
@@ -66,17 +67,20 @@ include '../includes/variances.php';
                         <br>
                         <div class="mb-3">
                             <label class="subformText">Tasks</label>
-                            <input type="text" name="search_task" class="form-control" placeholder="Search for task">
+                            <input type="text" name="search_task" value="<?php echo $search_task ?>"
+                                class="form-control" placeholder="Search for task">
                         </div>
                         <br>
                         <div class="mb-3">
                             <label class="subformText">From</label>
-                            <input type="date" name="search_startdate" class="form-control">
+                            <input type="date" name="search_startdate" value="<?php echo $search_startdate ?>"
+                                class="form-control">
                         </div>
                         <br>
                         <div class="mb-3">
                             <label class="subformText">To</label>
-                            <input type="date" name="search_enddate" class="form-control">
+                            <input type="date" name="search_enddate" value="<?php echo $search_enddate ?>"
+                                class="form-control">
                         </div>
                         <!-- Status type chechbox -->
                         <div class="mb-3">
@@ -87,7 +91,8 @@ include '../includes/variances.php';
                             ?>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="search_stats[]"
-                                    value="<?php echo $stat_id[$i]; ?>" id="flexCheckDefault">
+                                    value="<?php echo $stat_id[$i]; ?>" id="flexCheckDefault"
+                                    <?php echo $stat_check[$i]; ?>>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     <?php echo $stat[$i]; ?>
                                 </label>

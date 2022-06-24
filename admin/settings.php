@@ -1,5 +1,11 @@
 <?php
 include '../includes/db_connect.php';
+
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    header("location:../login/index.php");
+}
 include '../includes/variances.php';
 $sql_stat = mysqli_query($conn, "SELECT * FROM status_list ORDER BY status_list.status_id");
 $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_id");
@@ -28,8 +34,8 @@ $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_i
     <!-- =================================== -->
     <section class="home-section">
         <div class="home-content">
-            <i class='bx bx-menu'></i>
-            <div class="text">Settings</div>
+            <i class='bx bx-cog'></i>
+            <a href="./settings.php" class="text">Settings</a>
         </div>
         <div class=mainContent>
             <!-- STATUS -->
@@ -39,18 +45,19 @@ $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_i
                     <th>Task Status</th>
                 </tr>
                 <?php
-                while ($row_stat = mysqli_fetch_array($sql_stat)) {
-                    if ($row_stat['status'] != "No status") {
+                $i = 0;
+                while ($i < $stat_count) {
+                    if ($stat[$i] != "No status") {
                 ?>
                 <tr>
                     <td>
                         <?php
-                                if ($row_stat['status_id'] == 2) {
+                                if ($stat_id[$i] == 2) {
                                     echo "";
                                 } else {
                                 ?>
                         <button class="btn btn-outline-light" type="button" data-bs-toggle="modal"
-                            data-bs-target="#statusdeleteModal<?php echo $row_stat['status_id'] ?>">
+                            data-bs-target="#statusdeleteModal<?php echo $stat_id[$i] ?>">
                             <i class="bi bi-trash"></i></button>
                         <?php
                                 }
@@ -60,12 +67,13 @@ $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_i
                         <?php
                                 include 'modals/delete_status_modal.php';
 
-                                echo $row_stat['status'];
+                                echo $stat[$i];
                                 ?>
                     </td>
                 </tr>
                 <?php
                     }
+                    $i++;
                 }
                 ?>
                 <tr>
@@ -92,24 +100,26 @@ $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_i
                     <th>Program Type</th>
                 </tr>
                 <?php
-                while ($row_pgtype = mysqli_fetch_array($sql_pgtype)) {
-                    if ($row_pgtype['pg_type'] != "No Program") {
+                $i = 0;
+                while ($i < $pgtype_count) {
+                    if ($pgtype[$i] != "No Program") {
                 ?>
                 <tr>
                     <td>
                         <button class="btn btn-outline-light" type="button" data-bs-toggle="modal"
-                            data-bs-target="#pgtypedeleteModal<?php echo $row_pgtype['pg_type_id'] ?>">
+                            data-bs-target="#pgtypedeleteModal<?php echo $pgtype_id[$i] ?>">
                             <i class="bi bi-trash"></i></button>
                     </td>
                     <td>
                         <?php
                                 include 'modals/delete_pgtype_modal.php';
-                                echo $row_pgtype['pg_type']
+                                echo $pgtype[$i]
                                 ?>
                     </td>
                 </tr>
                 <?php
                     }
+                    $i++;
                 }
                 ?>
                 <tr>
@@ -141,7 +151,7 @@ $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_i
     </script>
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/bootstrap.js"></script>
-    <!-- ================ -->
+    <!-- ========== SIDE MENU========= -->
     <script>
     let arrow = document.querySelectorAll(".arrow");
     for (var i = 0; i < arrow.length; i++) {
@@ -150,12 +160,6 @@ $sql_pgtype = mysqli_query($conn, "SELECT * FROM pg_type_list ORDER BY pg_type_i
             arrowParent.classList.toggle("showMenu");
         });
     }
-    let sidebar = document.querySelector(".sidebar");
-    let sidebarBtn = document.querySelector(".bx-menu");
-    console.log(sidebarBtn);
-    sidebarBtn.addEventListener("click", () => {
-        sidebar.classList.toggle("close");
-    });
     </script>
 </body>
 

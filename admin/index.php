@@ -11,33 +11,18 @@ if (!isset($_SESSION['email'])) {
 include '../includes/variances.php';
 
 // ----------default filter conditions-----------
-$search_intern = "";
-$search_task = "";
-$search_startdate = "0000-00-00";
-$search_enddate = "9999-12-31";
+
 $search_programs = $pgtype_id;
 $search_stats = $stat_id;
 
 // ----------update filter conditions-----------
-if (isset($_GET['search_intern'])) {
-    $search_intern = $_GET['search_intern'];
-}
-if (isset($_GET['search_task'])) {
-    $search_task = $_GET['search_task'];
-}
-if (isset($_GET['search_startdate'])) {
-    $search_startdate = $_GET['search_startdate'];
-}
-if (isset($_GET['search_enddate'])) {
-    $search_enddate = $_GET['search_enddate'];
-}
-if (($search_enddate == "0000-00-00") or ($search_enddate == '')) {
-    $search_enddate = "9999-12-31";
-}
+
+
 if (isset($_GET['search_programs'])) {
     $search_programs = $_GET['search_programs'];
 }
 $search_programs = implode(', ', $search_programs);
+
 if (isset($_GET['search_stats'])) {
     $search_stats = $_GET['search_stats'];
 }
