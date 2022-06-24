@@ -23,7 +23,7 @@ This application can also be used for similar purposes such as managing projects
 and Many More..
 
 
-## Task Management System Project
+## Tools
 * Name of Project:     Intern Management System Project
 * Language:            PHP
 * Databases used:      MySQL
