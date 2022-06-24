@@ -42,17 +42,17 @@ and Many More..
 ## How To Run
 For preparation, please install a virtual server such as [XAMPP](https://www.apachefriends.org/) on your PC. After that, start Apache and MySQL in XAMPP. When you have done with XAMPP, follow the following steps:
 
-Step 1: Download and extract this project's folder.
-Step 2: Copy the main project folder and padte in xampp/htdocs in your PC.
-Step 3: Open a browser and go to URL "http://localhost/phpmyadmin/".
-Step 4: Click on the databases tab.
-Step 5: Create a database naming "id19122848_internship_db" and then click on the import tab.
-Step 6: Click on browse file and select "id19122848_internship_db.sql" file which is inside the "database folder.
-Step 7: Click "Go" button.
-Step 9: Open a browser and go to URL "http://localhost/intern-management/login"
+Step 1: Download and extract this project's folder.<br>
+Step 2: Copy the main project folder and padte in xampp/htdocs in your PC.<br>
+Step 3: Open a browser and go to URL "http://localhost/phpmyadmin/".<br>
+Step 4: Click on the databases tab.<br>
+Step 5: Create a database naming "id19122848_internship_db" and then click on the import tab.<br>
+Step 6: Click on browse file and select "id19122848_internship_db.sql" file which is inside the "database folder.<br>
+Step 7: Click "Go" button.<br>
+Step 9: Open a browser and go to URL "http://localhost/intern-management/login"<br>
 
-**Admin Access**
-Email: admin123@jg-corporation.com
-Password: admin123
+**Admin Access**<br>
+Email: admin123@jg-corporation.com<br>
+Password: admin123<br>
 
 
