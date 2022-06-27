@@ -7,9 +7,9 @@ include '../includes/variances.php';
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> TASK'S DETAILS </h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-
+                <h5 class="modal-title" id="exampleModalLabel"> View Task </h5>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="bi bi-x"></i>
                 </button>
             </div>
 
@@ -19,6 +19,15 @@ include '../includes/variances.php';
 
                     <input type="hidden" name="taskid" value="<?php echo $rows['task_id'] ?>">
                     <input type="hidden" name="pgid" value="<?php echo $rows['pg_id'] ?>">
+
+                    <div class="mb-3">
+                        <label>Name: </label>
+                        <?php echo "<b>" . $rows['name'] . "</b>" ?>
+                    </div>
+                    <div class="mb-3">
+                        <label>Program: </label>
+                        <?php echo "<b>" . $rows['pg_type'] . "</b>" ?>
+                    </div>
                     <div class="mb-3">
                         <label>Task</label>
                         <input type="text" name="task" value="<?php echo $rows['task'] ?>" class="form-control"
@@ -28,7 +37,7 @@ include '../includes/variances.php';
                         <label>Description</label>
                         <textarea name="description" cols="53" rows="5" class="form-control"
                             placeholder="Enter task's description"
-                            disabled><?php echo $rows['description'] ?> </textarea>
+                            disabled><?php echo $rows['description'] ?></textarea>
                     </div>
                     <div class="mb-3">
                         <label>Start date</label>
@@ -42,14 +51,21 @@ include '../includes/variances.php';
                     </div>
                     <div class="form-select form-select-lg mb-3">
                         <label>Status</label><br>
-                        <select name="taskstatus">
-                            <option selected value="<?php echo $rows['task_status'] ?>">
-                                <?php echo $stat[$rows['task_status'] - 1] ?></option>
-                            <option value="1">To-do</option>
-                            <option value="2">On-Progress</option>
-                            <option value="3">Blocked</option>
-                            <option value="4">Done</option>
-                        </select>
+                        <div class="selectWrapper">
+                            <select class="selectBox" name="taskstatus">
+                                <option value="<?php echo $rows['status_id'] ?>" selected hidden>
+                                    <?php echo $rows['status']; ?></option>
+                                <?php
+                                $i = 0;
+                                while ($i < $stat_count) {
+                                ?>
+                                <option value=" <?php echo $stat_id[$i]; ?>"><?php echo $stat[$i]; ?> </option>
+                                <?php
+                                    $i++;
+                                }
+                                ?>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

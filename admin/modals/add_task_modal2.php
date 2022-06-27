@@ -45,7 +45,7 @@
 	                    </div>
 	                    <div class="mb-3">
 	                        <label>Task</label>
-	                        <input type="text" name="task" class="form-control" placeholder="Enter task's name">
+	                        <input type="text" name="task" class="form-control" placeholder="Enter task's name" required>
 	                    </div>
 	                    <div class="mb-3">
 	                        <label>Task Description</label>

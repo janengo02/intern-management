@@ -44,6 +44,10 @@ if (isset($_POST['addintern'])) {
         echo '<script> alert("Data Saved"); </script>';
         header('location:../index.php');
     } else {
-        echo '<script> alert("Data Not Saved"); </script>';
+        echo '<script type="text/javascript"> ';
+        echo '  if (confirm("Data not saved! User email already exists!")) {';
+        echo '    document.location = "../index.php";';
+        echo '}';
+        echo '</script>';
     }
 }

@@ -11,8 +11,7 @@ if (!isset($_SESSION['email'])) {
 include '../includes/variances.php';
 
 // ------------------------
-if ($search_task != "") {
-    $sql = mysqli_query($conn, "SELECT interns.intern_id,interns.name, interns.email, 
+$sql = mysqli_query($conn, "SELECT interns.intern_id,interns.name, interns.email, 
     interns.password,interns.avatar,
     program_list.pg_id,
     program_list.pg_start_date,program_list.pg_end_date,
@@ -39,34 +38,6 @@ if ($search_task != "") {
         AND (task_list.status_id IN (" . $search_stats . "))
 
     ORDER BY $sorting_conditions");
-} else {
-    $sql = mysqli_query($conn, "SELECT interns.intern_id,interns.name, interns.email, 
-    interns.password,interns.avatar,
-    program_list.pg_id,
-    program_list.pg_start_date,program_list.pg_end_date,
-    program_list.pg_status, program_list.pg_type_id,
-    pg_type_list.pg_type,
-    task_list.task_id, task_list.task, task_list.description, 
-    task_list.task_start_date, task_list.task_end_date,
-    task_list.status_id,  status_list.status
-    FROM interns LEFT JOIN program_list 
-    ON interns.intern_id=program_list.intern_id 
-    LEFT JOIN task_list
-    ON task_list.pg_id = program_list.pg_id
-    LEFT JOIN status_list
-    ON status_list.status_id = task_list.status_id
-    LEFT JOIN pg_type_list
-    ON program_list.pg_type_id = pg_type_list.pg_type_id
-    WHERE NOT interns.type = 1 
-        AND (interns.name LIKE '%$search_intern%')
-        AND (((DATE(task_list.task_start_date) >= '$search_startdate') OR (DATE(program_list.pg_start_date) >= '$search_startdate'))
-        AND ((DATE(task_list.task_end_date)<='$search_enddate') OR (DATE(program_list.pg_end_date)<='$search_enddate')))
-        
-        AND (program_list.pg_type_id IN (" . $search_programs . "))
-        AND (task_list.status_id IN (" . $search_stats . "))
-
-    ORDER BY $sorting_conditions");
-}
 //---------------------UPDATE TASK STATUS----------------------------
 if (isset($_GET['status_id']) && isset($_GET['task_id']) && isset($_GET['pg_id'])) {
     $task_id = $_GET['task_id'];

@@ -2,11 +2,15 @@
 include '../../includes/db_connect.php';
 include '../../includes/update_pg_stat.php';
 if (isset($_POST['taskid'])) {
-    $task_id = $_POST['taskid'];
-    $pg_id = $_POST['pgid'];
+    $task_id = mysqli_real_escape_string($conn, $_POST['taskid']);
+    $pg_id =  mysqli_real_escape_string($conn, $_POST['pgid']);
+    $description =  mysqli_real_escape_string($conn, $_POST['description']);
+    $taskstartdate = $_POST['taskstartdate'];
+    $taskenddate = $_POST['taskenddate'];
     $taskstatus = $_POST['taskstatus'];
 
-    $query = "UPDATE `task_list` SET `task_status`='$taskstatus'
+    $query = "UPDATE `task_list` SET `description`='$description', 
+    `task_start_date`='$taskstartdate', `task_end_date`='$taskenddate',`status_id`='$taskstatus'
     WHERE `task_id`=$task_id";
 
     $query_run = mysqli_query($conn, $query);

@@ -1,47 +1,51 @@
 <?php
 include '../includes/db_connect.php';
-include '../style.css';
-include '../includes/variances.php';
 include '../includes/update_pg_stat.php';
+
 session_start();
 
-
-if (!isset($_SESSION["email"])) {
+if (!isset($_SESSION['email'])) {
     header("location:../login/index.php");
-} else {
-    $email = $_SESSION["email"];
 }
-$aname = $_SESSION['name'];
 
+include '../includes/variances.php';
+
+// ------------------------
 $sql = mysqli_query($conn, "SELECT interns.intern_id,interns.name, interns.email, 
-interns.password, interns.avatar,
-program_list.pg_id,program_list.pg_type,
-program_list.pg_start_date,program_list.pg_end_date,
-program_list.pg_status,program_list.progress,
-task_list.task_id, task_list.task, task_list.description, task_list.task_start_date, task_list.task_end_date,
-task_list.task_status
-FROM interns LEFT JOIN program_list 
-ON interns.intern_id=program_list.intern_id 
-LEFT JOIN task_list
-ON program_list.pg_id = task_list.pg_id
-WHERE interns.email = '$email'
-ORDER BY interns.intern_id DESC,task_list.task_id ASC");
+    interns.password,interns.avatar,
+    program_list.pg_id,
+    program_list.pg_start_date,program_list.pg_end_date,
+    program_list.pg_status, program_list.pg_type_id,
+    pg_type_list.pg_type,
+    task_list.task_id, task_list.task, task_list.description, 
+    task_list.task_start_date, task_list.task_end_date,
+    task_list.status_id,  status_list.status
+    FROM interns LEFT JOIN program_list 
+    ON interns.intern_id=program_list.intern_id 
+    LEFT JOIN task_list
+    ON  task_list.pg_id = program_list.pg_id
+    LEFT JOIN status_list
+    ON status_list.status_id = task_list.status_id
+    LEFT JOIN pg_type_list
+    ON program_list.pg_type_id = pg_type_list.pg_type_id
+    WHERE interns.email = '$login_email'
+        AND (task_list.task LIKE '%$search_task%')
+        AND (((DATE(task_list.task_start_date) >= '$search_startdate') OR (DATE(program_list.pg_start_date) >= '$search_startdate'))
+        AND ((DATE(task_list.task_end_date)<='$search_enddate') OR (DATE(program_list.pg_end_date)<='$search_enddate')))
+        AND (task_list.status_id IN (" . $search_stats . "))
 
-
+    ORDER BY $sorting_conditions");
 //---------------------UPDATE TASK STATUS----------------------------
-if (isset($_GET['task_status']) && isset($_GET['task_id']) && isset($_GET['pg_id'])) {
+if (isset($_GET['status_id']) && isset($_GET['task_id']) && isset($_GET['pg_id'])) {
     $task_id = $_GET['task_id'];
-    $task_status = $_GET['task_status'];
+    $status_id = $_GET['status_id'];
     $pg_id = $_GET['pg_id'];
-    // echo $task_id;
-    // echo $task_status;
-    mysqli_query($conn, "UPDATE task_list SET task_status=$task_status
-WHERE task_id=$task_id");
+    mysqli_query($conn, "UPDATE task_list SET status_id=$status_id 
+        WHERE task_id=$task_id");
     updatePG($pg_id);
-    header("location:index.php");
+    header('location:index.php');
     die();
 }
-//----------------------
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,34 +56,115 @@ WHERE task_id=$task_id");
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!----===== Boxicons CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 
 <body>
-    <div class="fixed-header">
-        <div class="container">
-            <nav>
-                <a href="#"><img src="../img/JG_logo_white.png" class="logo"></a>
-                <div class="webTitle"><b>INTERNSHIP MANAGEMENT PROGRAM</b></div>
-                <div id="login" class="loginDisplay">
-                    <i class="bi bi-person-circle"></i> <?php echo $aname ?> |
-                    <a href="../login/index.php">Log out</a>
-                </div>
-            </nav>
+
+    <?php
+    include 'includes/side_menu.php';
+    include '../style.css'; ?>
+    <section class="home-section">
+        <div class="home-content">
+            <i class='bx bx-grid-alt'></i>
+            <a href="./index.php" class="text">DashBoard</a>
         </div>
-    </div>
-    <section>
-        <!--============================================================================================================== -->
         <div class=mainContent>
-            <!-- TABLE CONSTRUCTION-->
             <table>
                 <tr>
                     <th></th>
                     <th>Intern</th>
                     <th>Program</th>
-                    <th>Start date</th>
-                    <th>End date</th>
-                    <th>Status</th>
-                    <th>Progress</th>
+                    <th>Start date
+                        <form action="db/sort_db.php" method="POST" class="sortform">
+                            <?php
+                            if ($arrow[2] == "ASC") {
+                            ?>
+                            <button type="submit" name="startdateASC" class="mybtn"> <i
+                                    class='bx bxs-up-arrow'></i></button>
+                            <button type="submit" name="startdateDESC" class="mybtn"> <i
+                                    class='bx bx-down-arrow'></i></button>
+                            <?php
+                            } else if ($arrow[2] == "DESC") {
+                            ?>
+                            <button type="submit" name="startdateASC" class="mybtn"> <i
+                                    class='bx bx-up-arrow'></i></button>
+                            <button type="submit" name="startdateDESC" class="mybtn"> <i
+                                    class='bx bxs-down-arrow'></i></button>
+                            <?php
+                            } else if ($arrow[2] == "NO") {
+                            ?>
+                            <button type="submit" name="startdateASC" class="mybtn"> <i
+                                    class='bx bx-up-arrow'></i></button>
+                            <button type="submit" name="startdateDESC" class="mybtn"> <i
+                                    class='bx bx-down-arrow'></i></button>
+                            <?php
+                            }
+                            ?>
+                        </form>
+                    </th>
+                    <th>End date
+                        <form action="db/sort_db.php" method="POST" class="sortform">
+                            <?php
+                            if ($arrow[3] == "ASC") {
+                            ?>
+                            <button type="submit" name="enddateASC" class="mybtn"> <i
+                                    class='bx bxs-up-arrow'></i></button>
+                            <button type="submit" name="enddateDESC" class="mybtn"> <i
+                                    class='bx bx-down-arrow'></i></button>
+                            <?php
+                            } else if ($arrow[3] == "DESC") {
+                            ?>
+                            <button type="submit" name="enddateASC" class="mybtn"> <i
+                                    class='bx bx-up-arrow'></i></button>
+                            <button type="submit" name="enddateDESC" class="mybtn"> <i
+                                    class='bx bxs-down-arrow'></i></button>
+                            <?php
+                            } else if ($arrow[3] == "NO") {
+                            ?>
+                            <button type="submit" name="enddateASC" class="mybtn"> <i
+                                    class='bx bx-up-arrow'></i></button>
+                            <button type="submit" name="enddateDESC" class="mybtn"> <i
+                                    class='bx bx-down-arrow'></i></button>
+                            <?php
+                            }
+                            ?>
+                        </form>
+                    </th>
+                    <th>Status
+                        <form action="db/sort_db.php" method="POST" class="sortform">
+                            <?php
+                            if ($arrow[4] == "ASC") {
+                            ?>
+                            <button type="submit" name="statusASC" class="mybtn"> <i
+                                    class='bx bxs-up-arrow'></i></button>
+                            <button type="submit" name="statusDESC" class="mybtn"> <i
+                                    class='bx bx-down-arrow'></i></button>
+                            <?php
+                            } else if ($arrow[4] == "DESC") {
+                            ?>
+                            <button type="submit" name="statusASC" class="mybtn"> <i
+                                    class='bx bx-up-arrow'></i></button>
+                            <button type="submit" name="statusDESC" class="mybtn"> <i
+                                    class='bx bxs-down-arrow'></i></button>
+                            <?php
+                            } else if ($arrow[4] == "NO") {
+                            ?>
+                            <button type="submit" name="statusASC" class="mybtn"> <i
+                                    class='bx bx-up-arrow'></i></button>
+                            <button type="submit" name="statusDESC" class="mybtn"> <i
+                                    class='bx bx-down-arrow'></i></button>
+                            <?php
+                            }
+                            ?>
+                        </form>
+                    </th>
                 </tr>
                 <!-- PHP CODE TO FETCH DATA FROM ROWS-->
                 <?php // LOOP TILL END OF DATA
@@ -88,10 +173,9 @@ WHERE task_id=$task_id");
                 $db_row_n = mysqli_num_rows($sql);
                 $row_count = 0;
                 while ($rows = $sql->fetch_assoc()) {
-                    $row_count++;
                 ?>
                 <tr>
-                    <!-- AVATAR -->
+                    <!-----AVATAR----->
                     <td>
                         <?php
                             if ($rows['intern_id'] != $prev_intern) {
@@ -108,9 +192,9 @@ WHERE task_id=$task_id");
                         <?php
                             if ($rows['intern_id'] != $prev_intern) {
                             ?>
-                        <button class="databtn" type="button" data-bs-toggle="modal"
+                        <button class="databtn databtnhead" type="button" data-bs-toggle="modal"
                             data-bs-target="#interneditModal<?php echo $rows['intern_id'] ?>">
-                            <?php echo "<b>" . $rows['name'] . "</b>" ?></button>
+                            <?php echo $rows['name'] ?></button>
                         <?php
                                 include 'modals/edit_intern_modal.php';
                                 $prev_intern = $rows['intern_id'];
@@ -124,9 +208,10 @@ WHERE task_id=$task_id");
                     <td>
                         <?php
                             if ($rows['pg_id'] != $prev_pg) {
-                                echo "<b>" . $pgtyp[$rows['pg_type'] - 1] . "</b>";
+                                echo $rows['pg_type'];
                             } else {
                             ?>
+                        <!-- task -->
                         <button class="databtn" type="button" data-bs-toggle="modal"
                             data-bs-target="#taskeditModal<?php echo $rows['task_id'] ?>">
                             <?php echo $rows['task'] ?></button>
@@ -139,7 +224,7 @@ WHERE task_id=$task_id");
                     <td>
                         <?php
                             if ($rows['pg_id'] != $prev_pg) {
-                                echo "<b>" . $rows['pg_start_date'] . "</b>";
+                                echo $rows['pg_start_date'];
                             } else {
                             ?>
                         <button class="databtn" type="button" data-bs-toggle="modal"
@@ -154,14 +239,40 @@ WHERE task_id=$task_id");
                     <td>
                         <?php
                             if ($rows['pg_id'] != $prev_pg) {
-                                echo "<b>" . $rows['pg_end_date'] . "</b>";
-                            } else {
+                                echo $rows['pg_end_date'];
+                                if ($rows['pg_end_date'] < $rows['pg_start_date']) {
                             ?>
+                        <button type="button" class="warningbtn" data-bs-toggle="tooltip" data-bs-placement="right"
+                            title="End Date must be after Start Date!">
+                            <i class='bx bxs-error-circle bx-xs'></i>
+                        </button>
+                        <?php
+                                }
+                            } else {
+
+                                ?>
                         <button class="databtn" type="button" data-bs-toggle="modal"
                             data-bs-target="#taskeditModal<?php echo $rows['task_id'] ?>">
                             <?php echo $rows['task_end_date'] ?></button>
                         <?php
                                 include 'modals/edit_task_modal.php';
+                                if (($rows['task_end_date'] < $rows['task_start_date']) || ($rows['task_start_date'] < $rows['pg_start_date']) || ($rows['task_end_date'] > $rows['pg_end_date'])) {
+                                ?>
+                        <button type="button" class="warningbtn" data-bs-toggle="tooltip" data-bs-placement="right"
+                            title="
+                                                <?php
+                                                if ($rows['task_end_date'] < $rows['task_start_date']) {
+                                                    echo "End Date must be after Start Date!";
+                                                }
+                                                if (($rows['task_start_date'] < $rows['pg_start_date']) || ($rows['task_end_date'] > $rows['pg_end_date'])) {
+                                                    echo "Task's dates must be within the program's period!";
+                                                }
+                                                ?>
+                                            ">
+                            <i class='bx bxs-error-circle bx-xs'></i>
+                        </button>
+                        <?php
+                                }
                             }
                             ?>
                     </td>
@@ -169,80 +280,134 @@ WHERE task_id=$task_id");
                     <td>
                         <?php
                             if ($rows['pg_id'] != $prev_pg) {
-                                echo "<b>" . $stat[$rows['pg_status'] - 1] . "</b>";
-                            } else {
                             ?>
-                        <div class="selectWrapper">
-                            <select class="selectBox"
-                                onchange="status_update(this.options[this.selectedIndex].value,'<?php echo $rows['task_id'] ?>','<?php echo $rows['pg_id'] ?>')">
-                                <option value=""><?php echo $stat[$rows['task_status'] - 1]; ?></option>
-                                <option value="1">To-do</option>
-                                <option value="2">On-Progress</option>
-                                <option value="3">Blocked</option>
-                                <option value="4">Done</option>
-                            </select>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-info" role="progressbar"
+                                style="width:<?php echo $rows['pg_status'] . '%' ?>">
+                                <?php echo (round($rows['pg_status'], 1)) . '%' ?></div>
                         </div>
                         <?php
-                            }
-                            ?>
-                    </td>
-                    <!-----PROGRESS----->
-                    <td>
-                        <?php
-                            if ($rows['pg_id'] != $prev_pg) {
-                                echo "<b>" . $rows['progress'] . "%" . "</b>";
                                 $prev_pg = $rows['pg_id'];
-                            ?>
-                        <?php
                                 if ($rows['task'] != NULL) {
                                 ?>
                         <!-- 1st task row -->
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td><button class="databtn" type="button" data-bs-toggle="modal"
+                    <td><?php echo ""; ?></td>
+                    <td><?php echo ""; ?></td>
+                    <td>
+                        <?php
+                                    if ($rows['task'] == 'No task') {
+                                        echo "<i>No task</i>";
+                                    } else {
+                            ?>
+                        <button class="databtn" type="button" data-bs-toggle="modal"
                             data-bs-target="#taskeditModal<?php echo $rows['task_id'] ?>">
                             <?php echo $rows['task'] ?></button>
                         <?php
-                                    include 'modals/edit_task_modal.php';
+                                        include 'modals/edit_task_modal.php';
+                                    }
                             ?>
+
                     </td>
                     <td>
+                        <?php
+                                    if ($rows['task'] == 'No task') {
+                                        echo "";
+                                    } else {
+                            ?>
                         <button class="databtn" type="button" data-bs-toggle="modal"
                             data-bs-target="#taskeditModal<?php echo $rows['task_id'] ?>">
                             <?php echo $rows['task_start_date'] ?></button>
                         <?php
-                                    include 'modals/edit_task_modal.php';
+                                        include 'modals/edit_task_modal.php';
+                                    }
                             ?>
                     </td>
                     <td>
+                        <?php
+                                    if ($rows['task'] == 'No task') {
+                                        echo "";
+                                    } else {
+                            ?>
                         <button class="databtn" type="button" data-bs-toggle="modal"
                             data-bs-target="#taskeditModal<?php echo $rows['task_id'] ?>">
                             <?php echo $rows['task_end_date'] ?></button>
                         <?php
-                                    include 'modals/edit_task_modal.php';
+                                        include 'modals/edit_task_modal.php';
+                                        if (($rows['task_end_date'] < $rows['task_start_date']) || ($rows['task_start_date'] < $rows['pg_start_date']) || ($rows['task_end_date'] > $rows['pg_end_date'])) {
+                                ?>
+                        <button type="button" class="warningbtn" data-bs-toggle="tooltip" data-bs-placement="right"
+                            title="
+                                            <?php
+                                            if ($rows['task_end_date'] < $rows['task_start_date']) {
+                                                echo "End Date must be after Start Date!";
+                                            }
+                                            if (($rows['task_start_date'] < $rows['pg_start_date']) || ($rows['task_end_date'] > $rows['pg_end_date'])) {
+                                                echo "Task's dates must be within the program's period!";
+                                            }
+                                            ?>
+                                        ">
+                            <i class='bx bxs-error-circle bx-xs'></i>
+                        </button>
+                        <?php
+                                        }
+                                    }
                             ?>
                     </td>
                     <td>
+                        <?php
+                                    if ($rows['task'] == 'No task') {
+                                        echo "";
+                                    } else {
+                            ?>
                         <div class="selectWrapper">
                             <select class="selectBox"
                                 onchange="status_update(this.options[this.selectedIndex].value,'<?php echo $rows['task_id'] ?>','<?php echo $rows['pg_id'] ?>')">
-                                <option value=""><?php echo $stat[$rows['task_status'] - 1]; ?></option>
-                                <option value="1">To-do</option>
-                                <option value="2">On-Progress</option>
-                                <option value="3">Blocked</option>
-                                <option value="4">Done</option>
+                                <option value="<?php echo $rows['status_id']; ?>" selected hidden>
+                                    <?php echo $rows['status']; ?></option>
+                                <?php
+                                        $i = 0;
+                                        while ($i < $stat_count) {
+                                            if ($stat_id[$i] != 7) {
+                                        ?>
+                                <option value="<?php echo $stat_id[$i]; ?>"><?php echo $stat[$i]; ?> </option>
+                                <?php
+                                            }
+                                            $i++;
+                                        }
+                                        ?>
+                                <option value="7"><?php echo "No status"; ?> </option>
                             </select>
                         </div>
+                        <?php
+                                    }
+                            ?>
                     </td>
-                    <td><?php echo ""; ?></td>
                 </tr>
                 <?php
                                 }
-                ?>
-                <?php
                             } else {
-                                echo "";
+                ?>
+                <div class="selectWrapper">
+                    <select class="selectBox"
+                        onchange="status_update(this.options[this.selectedIndex].value,'<?php echo $rows['task_id'] ?>','<?php echo $rows['pg_id'] ?>')">
+                        <option value="<?php echo $rows['status_id']; ?>" selected hidden>
+                            <?php echo $rows['status']; ?></option>
+                        <?php
+                                $i = 0;
+                                while ($i < $stat_count) {
+                                    if ($stat_id[$i] != 7) {
+                        ?>
+                        <option value="<?php echo $stat_id[$i]; ?>"><?php echo $stat[$i]; ?> </option>
+                        <?php
+                                    }
+                                    $i++;
+                                }
+                        ?>
+                        <option value="7"><?php echo "No status"; ?> </option>
+                    </select>
+                </div>
+                <?php
                             }
             ?>
                 </td>
@@ -252,6 +417,7 @@ WHERE task_id=$task_id");
         ?>
             </table>
         </div>
+
     </section>
     <!-- =========================================================================== -->
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -270,23 +436,32 @@ WHERE task_id=$task_id");
     <script type="text/javascript">
     function status_update(value, task_id, pg_id) {
         //alert(task_id);
-        let url = "http://localhost/intern_management/intern/index.php";
-        window.location.href = url + "?task_id=" + task_id + "&task_status=" + value + "&pg_id=" + pg_id;
+        let url = "http://localhost/intern-management/intern/index.php";
+        window.location.href = url + "?task_id=" + task_id + "&status_id=" + value + "&pg_id=" + pg_id;
     }
     </script>
-
-    <!-- ------- 3 dots menu --------- -->
+    <!-- ========== SIDE MENU========= -->
     <script>
-    document.querySelector('table').onclick = ({
-        target
-    }) => {
-        if (!target.classList.contains('more')) return
-        document.querySelectorAll('.dropout.active').forEach(
-            (d) => d !== target.parentElement && d.classList.remove('active')
-        )
-        target.parentElement.classList.toggle('active')
+    let arrow = document.querySelectorAll(".arrow");
+    for (var i = 0; i < arrow.length; i++) {
+        arrow[i].addEventListener("click", (e) => {
+            let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
+            arrowParent.classList.toggle("showMenu");
+        });
     }
     </script>
+    <!-- ==========progress bar========== -->
+    <!-- <script>
+    $(".animated-progress span").each(function() {
+        $(this).animate({
+                width: $(this).attr("data-progress") + "%",
+            },
+            1000
+        );
+        $(this).text($(this).attr("data-progress") + "%");
+    });
+    // document.getElementById("animated-progress span").style.width = $(this).attr("data-progress") + "%";
+    </script> -->
 </body>
 
 </html>

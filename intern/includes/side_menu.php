@@ -15,15 +15,6 @@ include '../includes/variances.php';
                 <span class="link_name">Dashboard</span>
             </a>
         </li>
-        <li>
-            <a href="./settings.php">
-                <i class='bx bx-cog'></i>
-                <span class="link_name">Settings</span>
-            </a>
-            <ul class="sub-menu blank">
-                <li><a class="link_name" href="#">Settings</a></li>
-            </ul>
-        </li>
         <!-- ================================FILTERS================================== -->
         <li>
             <div class="iocn-link">
@@ -37,34 +28,6 @@ include '../includes/variances.php';
                 <li><a class="link_name" href="#">Filter</a></li>
                 <form action="db/filter_db.php" method="POST">
                     <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="subformText">Interns</label>
-                            <input type="text" name="search_intern" value="<?php echo $search_intern ?>"
-                                class="form-control" placeholder="Search for intern">
-                        </div>
-                        <br>
-                        <!-- Program typ chechbox -->
-                        <div class="mb-3">
-                            <label class="subformText">Programs</label>
-                            <?php
-                            $i = 0;
-                            while ($i < $pgtype_count) {
-                            ?>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="search_programs[]"
-                                    value="<?php echo $pgtype_id[$i]; ?>" id="flexCheckDefault"
-                                    <?php echo $pgtype_check[$i]; ?>>
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    <?php echo $pgtype[$i]; ?>
-                                </label>
-                            </div>
-                            <?php
-                                $i++;
-                            }
-                            ?>
-                        </div>
-                        <!-- ----------------------- -->
-                        <br>
                         <div class="mb-3">
                             <label class="subformText">Tasks</label>
                             <input type="text" name="search_task" value="<?php echo $search_task ?>"
@@ -125,7 +88,7 @@ include '../includes/variances.php';
                         include 'modals/edit_profile_modal.php';
                         ?>
                     </div>
-                    <div class="job">Admin</div>
+                    <div class="job">Intern</div>
                 </div>
                 <a href="./../login/logout.php">
                     <i class='bx bx-log-out'></i>
