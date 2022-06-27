@@ -22,6 +22,17 @@ This application can also be used for similar purposes such as managing projects
 * Sorting
 and Many More..
 
+
+## Tools
+* Name of Project:     Intern Management System Project
+* Language:            PHP
+* Databases used:      MySQL
+* Design used:         HTML, CSS, JavaScript, JQuery, Bootstrap
+* Browser used:        Google Chrome
+* Software used:       WAMP/ XAMPP/ LAMP/MAMP
+
+
+
 ## Screenshots
 *Login Page*
 ![login](img/screenshots/Login.png) 
