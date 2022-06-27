@@ -34,6 +34,8 @@ th{
   background-color: #1d1b31;
   font-weight: bold;
   padding: 15px 0;
+  position: sticky;
+  top:0;
 } 
 table td:nth-child(3),
 table td:nth-child(4){
