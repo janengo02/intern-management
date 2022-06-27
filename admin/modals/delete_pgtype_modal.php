@@ -1,5 +1,5 @@
 <!--======== DELETE Pg Type Modal========= -->
-<div class="modal fade" id="pgtypedeleteModal<?php echo $row_pgtype['pg_type_id'] ?>" tabindex="-1" role="dialog"
+<div class="modal fade" id="pgtypedeleteModal<?php echo $pgtype_id[$i] ?>" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -14,9 +14,9 @@
 
                 <div class="modal-body">
 
-                    <input type="hidden" name="pgtypeid" value="<?php echo $row_pgtype['pg_type_id'] ?>">
+                    <input type="hidden" name="pgtypeid" value="<?php echo $pgtype_id[$i] ?>">
 
-                    The program <b>"<?php echo $row_pgtype['pg_type'] ?>"</b> will be deleted permanently.
+                    All programs labelled <b>"<?php echo $pgtype[$i] ?>"</b> will be changed into "No Program".
                     <br>
                     Are you sure?
                 </div>

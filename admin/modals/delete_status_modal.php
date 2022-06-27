@@ -1,5 +1,5 @@
 <!--======== DELETE Status Modal========= -->
-<div class="modal fade" id="statusdeleteModal<?php echo $row_stat['status_id'] ?>" tabindex="-1" role="dialog"
+<div class="modal fade" id="statusdeleteModal<?php echo $stat_id[$i] ?>" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -14,9 +14,10 @@
 
                 <div class="modal-body">
 
-                    <input type="hidden" name="statusid" value="<?php echo $row_stat['status_id'] ?>">
+                    <input type="hidden" name="statusid" value="<?php echo $stat_id[$i] ?>">
 
-                    The status label <b>"<?php echo $row_stat['status'] ?>"</b> will be deleted permanently.
+                    All tasks that are labelled <b>"<?php echo $stat[$i]; ?>"</b> will be changed into "No
+                    status".
                     <br>
                     Are you sure?
                 </div>
